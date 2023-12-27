@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FormComponent = ({ onClose }) => {
+const AddDishForm = ({ onClose }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Form submitted!');
@@ -25,4 +25,4 @@ const FormComponent = ({ onClose }) => {
   );
 };
 
-export default FormComponent;
+export default AddDishForm;

@@ -6,7 +6,7 @@ body {
 }
 
 .App {
-    background-image: url("../public/food.jpeg");
+    background-color: darkgray;
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -17,6 +17,7 @@ body {
     justify-content: center;
     align-items: center;
     color: white;
+    overflow-y: 'auto';
 }
 
 .btn {
@@ -34,4 +35,25 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+}
+
+.Card {
+    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+    margin: 5px;
+}
+
+.DishList {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.DishPage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 80vh;
+}
+
+.DishPageActions {
 }

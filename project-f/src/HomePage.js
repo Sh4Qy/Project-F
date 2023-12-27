@@ -1,13 +1,21 @@
-import React from 'react';
-
+import {React, useState  } from 'react';
+import MyVerticallyCenteredModal from './Modals/HomeModal';
+import { Button } from 'react-bootstrap';
 const HomePage = () => {
-    
-  return (
-    <div>
-      <h2>Home Page</h2>
-      <p>This is the home page content.</p>
-    </div>
-  );
+    const [modalShow, setModalShow] = useState(false);
+
+    return (
+      <>
+        <Button variant="primary" onClick={() => setModalShow(true)}>
+          Launch modal
+        </Button>
+  
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
+      </>
+    );
 };
 
 export default HomePage;
