@@ -6,8 +6,11 @@ import ShowDishModal from './Modals/ShowDish';
 import EditDishModal from './Modals/EditDish';
 import DeleteDishModal from './Modals/DeleteDish'
 import Collapse from 'react-bootstrap/Collapse';
+import axios from 'axios';
 
 const Dishes = () => {
+
+  const [fetchCategories, setFetchCategories] = useState([])
 
   const [addDishModalShow, setaddDishModalShow] = useState(false);
   const [editDishModalShow, setEditDishModalShow] = useState(false);
@@ -18,6 +21,25 @@ const Dishes = () => {
   const optionsSectionRef = useRef(null);
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
+  
+    axios.get('http://127.0.0.1:8000/category/', { cancelToken: source.token })
+      .then(response => {
+        setFetchCategories(response.data);
+        console.log(response.data)
+      })
+      .catch(error => {
+        if (axios.isCancel(error)) {
+        } else {
+        }
+      });
+  
+    return () => {
+      source.cancel();
+    };
+  }, []);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       console.log('Clicked outside');
       console.log('event.target:', event.target);
@@ -25,7 +47,7 @@ const Dishes = () => {
       if (addDishModalShow || editDishModalShow || showDishModalShow || deleteDishModalShow) {
         return;
       }
-      if (optionsSectionRef.current && !optionsSectionRef.current.contains(event.target)) {
+      if (optionsSectionRef.current && !optionsSectionRef.current?.contains(event.target)) {
         setShowOptions(false);
       }
     };
