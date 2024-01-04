@@ -1,4 +1,3 @@
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import AddDishForm from '../Forms/AddDish';
 
@@ -17,11 +16,8 @@ function AddDishModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AddDishForm onClose={props.onClose}/>
+        <AddDishForm Categories={props.Categories} onClose={props.onClose}/>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
     </Modal>
   );
 }

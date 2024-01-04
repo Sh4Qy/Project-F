@@ -1,8 +1,8 @@
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import EditDishForm from '../Forms/EditDish';
 
 function EditDishModal(props) {     
+
   return (
     <Modal
       show={props.show}
@@ -17,11 +17,8 @@ function EditDishModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <EditDishForm onClose={props.onClose}/>
+        <EditDishForm onClose={props.onClose} dish={props.info} Categories={props.Categories}/>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
     </Modal>
   );
 }

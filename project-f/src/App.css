@@ -79,3 +79,38 @@ body {
     width: 100px;
     height: 50px;
   }
+
+  .CardImageModal {
+    height: 400px;
+  }
+
+  .ShowModalFooter {
+    display: flex;
+  }
+
+  .ShowModalFooter h4{
+    margin-right: 10px;
+  }
+
+  .AddDishCheckBox {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .AddDishCheckBox .form-check{
+    margin-right: 10px;
+  }
+
+  .Alergies {
+    display: flex;
+  }
+
+  .Time {
+    display: flex;
+  }
+
+  .AddDishCheckBox .form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 10px;
+  }
