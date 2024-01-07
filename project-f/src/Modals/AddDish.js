@@ -16,7 +16,7 @@ function AddDishModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AddDishForm Categories={props.Categories} onClose={props.onClose}/>
+        <AddDishForm Categories={props.Categories} onClose={props.onClose} sleep={props.sleep} refresh={props.refresh}/>
       </Modal.Body>
     </Modal>
   );

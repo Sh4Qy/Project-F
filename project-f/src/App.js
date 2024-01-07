@@ -4,6 +4,7 @@ import HomePage from './HomePage';
 import Dishes from './Dishes';
 import './App.css';
 import { useNavigate  } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 
 function App() {
@@ -46,11 +47,11 @@ function App() {
       </Routes>
 
       {showLinks && (
-        <div className='HomeLink'> 
-          <Link to="/home" class="btn btn-primary">
-            Home
+        <div className='HomeLink'>
+          <Link to="/home" className='DishesLink'>
+            Choose For Me
           </Link>
-          <Link to="/dishes" class="btn btn-primary">
+          <Link to="/dishes" className='ChooseDishLink'>
             Dishes
           </Link>
         </div>

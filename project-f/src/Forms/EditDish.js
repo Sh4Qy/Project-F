@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-// import axios from 'axios';
+import axios from 'axios';
 
 function AddDishForm(props) {
 
     const Categories = props.Categories
     const dish = props.dish
 
+    const [uploadFile, setUploadFile] = useState(null)
     const [formData, setFormData] = useState({
       name: dish.name,
       description: dish.description,
@@ -21,7 +22,7 @@ function AddDishForm(props) {
   });
 
   const handleInputChange = (event) => {
-    const {id, value, type, checked} = event.target;
+    const {id, value, type, checked, files} = event.target;
     
     if (type === 'select-one') {
       const selectedOption = value;
@@ -31,6 +32,16 @@ function AddDishForm(props) {
       }));
       return;
     }
+
+    else if (type === 'file') {
+      const file = files[0];
+      setUploadFile(file);
+      setFormData((prevData) => ({
+        ...prevData,
+        [id]:file.name
+      }))
+      return;
+    }
     
     setFormData((prevData) => ({
       ...prevData,
@@ -38,13 +49,22 @@ function AddDishForm(props) {
     }));
   };
 
-    const handleSubmit = (event) => {
+    async function handleSubmit(event) {
         event.preventDefault();
         console.log(formData);
-        // axios.put(`http://127.0.0.1:8000/dish/${dish.id}`, formData).then(respnonse => {
-        //   console.log(respnonse.data)
-        // })
+        console.log(dish.id)
+        if (uploadFile !== null) {
+        const formDataObject = new FormData();
+        formDataObject.append('file', uploadFile)
+        axios.post(`http://127.0.0.1:8000/dish/upload`, formDataObject, {headers: { 'Content-Type': 'multipart/form-data' }}).then(respnonse => {
+          console.log(respnonse.data)
+        })}
+        axios.put(`http://127.0.0.1:8000/dish/${dish.id}`, formData).then(respnonse => {
+          console.log(respnonse.data)
+        })
         props.onClose();
+        await props.sleep(50)
+        props.refresh();
     }
   return (
     <Form onSubmit={handleSubmit} style={{fontSize: 'larger', fontWeight: 'bold'}}>
@@ -68,12 +88,10 @@ function AddDishForm(props) {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="img">
+      <Form.Group controlId="img" className="mb-3">
         <Form.Label>Image</Form.Label>
-        <Form.Control
-        type ="text"
-        placeholder="Enter name"
-        value={formData.img}
+        <Form.Control 
+        type="file"
         onChange={handleInputChange}
         />
       </Form.Group>

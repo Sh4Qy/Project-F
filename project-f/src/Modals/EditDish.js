@@ -17,7 +17,7 @@ function EditDishModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <EditDishForm onClose={props.onClose} dish={props.info} Categories={props.Categories}/>
+        <EditDishForm onClose={props.onClose} dish={props.info} Categories={props.Categories} sleep={props.sleep} refresh={props.refresh}/>
       </Modal.Body>
     </Modal>
   );

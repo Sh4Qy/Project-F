@@ -1,7 +1,19 @@
+import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 function DeleteDishModal(props) {     
+
+  const dish = props.info
+
+  async function deleteDish() {
+    axios.delete(`http://127.0.0.1:8000/dish/${dish.id}`).then(respnonse => {
+      console.log(respnonse.data)
+    })
+    props.onClose();
+    await props.sleep(50)
+    props.refresh();
+  }
   return (
     <Modal
       show={props.show}
@@ -16,7 +28,7 @@ function DeleteDishModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className='DeleteDishModalBody'>
-        <Button variant='success'>Yes</Button>
+        <Button variant='success' onClick={deleteDish}>Yes</Button>
         <Button variant='danger'>No</Button>
       </Modal.Body>
       <Modal.Footer>

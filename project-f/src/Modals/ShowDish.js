@@ -19,7 +19,7 @@ function ShowDishModal(props) {
       <Modal.Body>
         <div>
             <Card className="bg-dark text-white Card">
-              <Card.Img className="CardImageModal" src={`/${dish.img}.jpeg`} alt="Card image"/>
+              <Card.Img className="CardImageModal" src={`/uploads/${dish.img}`} alt="Card image"/>
             </Card>
         </div>
           <h5>
