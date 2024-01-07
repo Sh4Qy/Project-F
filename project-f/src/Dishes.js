@@ -7,6 +7,7 @@ import EditDishModal from './Modals/EditDish';
 import DeleteDishModal from './Modals/DeleteDish'
 import Collapse from 'react-bootstrap/Collapse';
 import axios from 'axios';
+import AddCategoryModal from './Modals/AddCategory';
 
 const Dishes = () => {
 
@@ -19,6 +20,7 @@ const Dishes = () => {
   const [refreshPage, setRefreshPage] = useState(false)
 
   const [addDishModalShow, setaddDishModalShow] = useState(false);
+  const [addCategoryModalShow, setaddCategoryModalShow] = useState(false);
   const [editDishModalShow, setEditDishModalShow] = useState(false);
   const [showDishModalShow, setShowDishModalShow] = useState(false);
   const [deleteDishModalShow, setDeleteDishModalShow] = useState(false);
@@ -99,6 +101,9 @@ const Dishes = () => {
         <Button variant="dark" onClick={(event) => {setaddDishModalShow(true); event.stopPropagation()}}>
             Add Dish
         </Button>
+        <Button variant="dark" onClick={(event) => {setaddCategoryModalShow(true); event.stopPropagation()}}>
+            Add Category
+        </Button>
       </div>
       <AddDishModal
         show={addDishModalShow}
@@ -109,6 +114,13 @@ const Dishes = () => {
         sleep={sleep}
       />
 
+      <AddCategoryModal
+        show={addCategoryModalShow}
+        onHide={() => setaddCategoryModalShow(false)}
+        onClose={() => setaddCategoryModalShow(false)}
+        refresh={() => setRefreshPage(!refreshPage)}
+        sleep={sleep}
+      />
       <EditDishModal
         show={editDishModalShow}
         onHide={() => setEditDishModalShow(false)}
