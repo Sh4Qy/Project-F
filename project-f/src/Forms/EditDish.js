@@ -67,7 +67,7 @@ function AddDishForm(props) {
         props.refresh();
     }
   return (
-    <Form onSubmit={handleSubmit} style={{fontSize: 'larger', fontWeight: 'bold'}}>
+    <Form onSubmit={handleSubmit} className='Form'>
       <Form.Group className="mb-3" controlId="name">
         <Form.Label>Name</Form.Label>
         <Form.Control

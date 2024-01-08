@@ -29,11 +29,8 @@ function DeleteDishModal(props) {
       </Modal.Header>
       <Modal.Body className='DeleteDishModalBody'>
         <Button variant='success' onClick={deleteDish}>Yes</Button>
-        <Button variant='danger'>No</Button>
+        <Button variant='danger' onClick={props.onHide}>No</Button>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
     </Modal>
   );
 }
