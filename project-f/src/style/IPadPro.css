@@ -1,0 +1,75 @@
+@media only screen and (min-width: 821px) and (max-width: 1025px) {
+
+    .DishesLink {
+    background-image: url('../../public/uploads/food2 - Tablet.jpeg');
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      width: 95vw;
+      height: 45vh;
+      border-radius: 50px;
+    }
+  
+    .ChooseDishLink {
+    background-image: url('../../public/uploads/ChoosingFood3 - Tablet.jpeg');
+      position: absolute;
+      top: 75%;
+      left: 50%;
+      width: 95vw;
+      height: 45vh;
+      border-radius: 50px;
+    }
+
+    .CardImageModal {
+      height: 40vh;
+    }
+
+    .OptionsIcon svg{
+      width: 2vw;
+      height: 2.5vh;
+    }
+
+    .OptionsSection svg {
+      width: 2vw;
+      height: 2vh;
+  }
+
+    .OptionsSection {
+      width: 6.5vw;
+      right: 1%;
+    }
+
+    .Form {
+      font-weight: bold;
+      font-size: 1.5em;
+    }
+
+    .Form .form-check-label {
+      font-size: 0.8em;
+    }
+
+    .navbar {
+      height: 7vh;
+    }
+    
+    .NavbarText {
+      font-weight: bold;
+      font-size: 30px;
+    }
+    
+    .navbar img {
+      height: 7vh;
+      width: 10vw;
+    }
+
+  .bi-arrow-left-circle-fill {
+    width: 4vw;
+    height: 4vh;
+  }
+
+  .bi-house-door-fill {
+    width: 4vw;
+    height: 4vh;
+  }
+
+}

@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import HomePage from './HomePage';
 import Dishes from './Dishes';
-import './App.css';
+import './style/App.css';
+import './style/IPadPro.css'
+import './style/Phone.css';
+import './style/Tablet.css'
 import { useNavigate  } from 'react-router-dom';
-import { Button, Navbar, Container } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
 
 
 function App() {

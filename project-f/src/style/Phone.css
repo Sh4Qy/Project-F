@@ -1,0 +1,112 @@
+@media only screen and (max-width: 480px) {
+
+    .App {
+      font-size: 7px;
+    }
+  
+    .DishesLink {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      width: 95vw;
+      height: 45vh;
+      border-radius: 50px;
+    }
+  
+    .ChooseDishLink {
+      position: absolute;
+      top: 75%;
+      left: 50%;
+      width: 95vw;
+      height: 45vh;
+      border-radius: 50px;
+    }
+
+    .CardImageModal {
+      height: 27vh;
+    }
+
+
+    .Form {
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .Form .form-check-label {
+      font-size: 0.7em;
+    }
+
+
+  .AddDishCheckBox {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+    .AddDishCheckBox .form-check-input {
+      width: 1em;
+      height: 1em;
+      margin-right: 10px;
+    }
+
+    .bi-three-dots-vertical{
+      width: 4.5vw;
+      height: 3vh;
+    }
+
+    .bi-pen{
+      width: 4.5vw;
+      height: 3vh;
+    }
+
+    .bi-trash3{
+      width: 4.5vw;
+      height: 3vh;
+    }
+
+    .OptionsSection {
+      width: 15vw;
+      right: 3%;
+    }
+
+    .navbar {
+      height: 7vh;
+    }
+    
+    .NavbarText {
+      font-weight: bold;
+      font-size: 25px;
+    }
+    
+    .navbar img {
+      height: 7vh;
+      width: 15vw;
+    }
+
+  .bi-arrow-left-circle-fill {
+    width: 5vw;
+    height: 4vh;
+  }
+
+  .bi-house-door-fill {
+    width: 5vw;
+    height: 4vh;
+  }
+
+  .AddButtons button{
+    width: 150px;
+    height: 60px;
+  }
+  
+  .DishList {
+    top: 20%;
+  }
+
+  .AddButtons {
+    top: 2.5%;
+  }
+
+  .FilterForm select {
+    width: 60vw;
+  }
+  
+}
