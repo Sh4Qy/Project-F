@@ -98,14 +98,13 @@ function AddDishForm(props) {
 
       <Form.Group className="mb-3" controlId="category_id">
         <Form.Label>Categories</Form.Label>
-        <Form.Select onChange={handleInputChange}>
+        <Form.Select onChange={handleInputChange} value={formData.category_id}>
           {Categories.map(category=>
           <option value={category.id}>{category.name}</option>
           )}
         </Form.Select>
       </Form.Group>
 
-    <div className='AddDishCheckBox'>
       <div className='Alergies'>
         <Form.Group className="mb-3">
           <Form.Check 
@@ -127,6 +126,8 @@ function AddDishForm(props) {
             />
         </Form.Group>
         </div>
+
+          <hr/>
 
         <div className='Time'>
         <Form.Group className="mb-3" controlId="breakfast_dish">
@@ -159,7 +160,6 @@ function AddDishForm(props) {
             />
         </Form.Group>
         </div>
-      </div>
       <Button variant="primary" type="submit">
         Submit
       </Button>

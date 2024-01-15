@@ -1,25 +1,21 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { Button, Card } from 'react-bootstrap';
-import AddDishModal from './Modals/AddDish';
-import ShowDishModal from './Modals/ShowDish';
-import EditDishModal from './Modals/EditDish';
-import DeleteDishModal from './Modals/DeleteDish'
+import AddDishModal from '../Modals/AddDish';
+import ShowDishModal from '../Modals/ShowDish';
+import EditDishModal from '../Modals/EditDish';
+import DeleteDishModal from '../Modals/DeleteDish'
 import Collapse from 'react-bootstrap/Collapse';
-import axios from 'axios';
-import AddCategoryModal from './Modals/AddCategory';
-import FilterModal from './Modals/Filter';
+import AddCategoryModal from '../Modals/AddCategory';
+import FilterModal from '../Modals/Filter';
 
-const Dishes = () => {
+const Dishes = (props) => {
 
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
-
-  const [fetchCategories, setFetchCategories] = useState([])
-  const [fetchDishes, setFetchDishes] = useState([])
-  const [refreshPage, setRefreshPage] = useState(false)
-
+  const { fetchCategories, fetchDishes, refreshPage, setRefreshPage } = props;
+  
   const [addDishModalShow, setaddDishModalShow] = useState(false);
   const [addCategoryModalShow, setaddCategoryModalShow] = useState(false);
   const [editDishModalShow, setEditDishModalShow] = useState(false);
@@ -36,43 +32,9 @@ const Dishes = () => {
   const [showOptions, setShowOptions] = useState(false)
   const optionsSectionRef = useRef(null);
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-  
-    axios.get('http://127.0.0.1:8000/category/', { cancelToken: source.token })
-      .then(response => {
-        setFetchCategories(response.data);
-        console.log(response.data)
-      })
-      .catch(error => {
-        if (axios.isCancel(error)) {
-        } else {
-        }
-      });
-  
-    return () => {
-      source.cancel();
-    };
-  }, []);
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-  
-    axios.get('http://127.0.0.1:8000/dish/', { cancelToken: source.token })
-      .then(response => {
-        setFetchDishes(response.data.reverse());
-        console.log(response.data)
-      })
-      .catch(error => {
-        if (axios.isCancel(error)) {
-        } else {
-        }
-      });
-  
-    return () => {
-      source.cancel();
-    };
-  }, [refreshPage]);
+  const [witchCategoryFilter, setWitchCategoryFilter] = useState('All')
+  const [filterData ,setFilterData] = useState({})
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -96,6 +58,12 @@ const Dishes = () => {
     showOptions === index
     ? setShowOptions(false)
     : setShowOptions(index)
+  }
+
+  const Filter = (dish) => {
+    const { name, description, img, category_id, id, ...DishAttributes} = dish
+    return (dish.category_id === parseInt(witchCategoryFilter) || witchCategoryFilter === 'All') &
+    (Object.keys(filterData).length === 0 || Object.keys(filterData).every(key => filterData[key] === DishAttributes[key]))
   }
 
   return (
@@ -163,17 +131,20 @@ const Dishes = () => {
         onHide={() => setFilterModalShow(false)}
         onClose={() => setFilterModalShow(false)}
         Categories={fetchCategories}
+        witchCategoryFilter={witchCategoryFilter}
+        setWitchCategoryFilter={setWitchCategoryFilter}
+        filterData={filterData}
+        setFilterData={setFilterData}
       />
 
 
         <div className='DishList'>
         {
           fetchDishes.map((dish, index)=> {
-            const { name, dexcription, img, ...DishAttributes} = dish;
+            if (Filter(dish)) {
 
             return (
-              <div>
-              <Card className="bg-dark text-white Card" onClick={() => {setShowDishModalShow(true); setShowDishModalInfo(dish)}}>
+              <Card key={dish.id} className="bg-dark text-white Card" onClick={() => {setShowDishModalShow(true); setShowDishModalInfo(dish)}}>
                 <Card.Img src={`/uploads/${dish.img}`} alt="Card image" style={{height: '200px', width: '300px'}} className=''/>
                 <Card.ImgOverlay>
                   <Card.Title>{dish.name}</Card.Title>
@@ -202,9 +173,10 @@ const Dishes = () => {
                   </div>
                 </Card.ImgOverlay>
               </Card>
-              </div>
               )
-            })
+            }
+            return null;
+          })
           }
         </div>
     </div>

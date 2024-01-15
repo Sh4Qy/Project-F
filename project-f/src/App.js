@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import HomePage from './HomePage';
-import Dishes from './Dishes';
+import HomePage from './pages/HomePage';
+import Dishes from './pages/Dishes';
 import './style/App.css';
 import './style/IPadPro.css'
 import './style/Phone.css';
 import './style/Tablet.css'
 import { useNavigate  } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
+import axios from 'axios';
+
 
 
 function App() {
@@ -16,6 +18,49 @@ function App() {
   const location = useLocation();
   const navigate  = useNavigate ();
 
+  const [fetchCategories, setFetchCategories] = useState([])
+  const [fetchDishes, setFetchDishes] = useState([])
+  const [refreshPage, setRefreshPage] = useState(false)
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+  
+    axios.get('http://127.0.0.1:8000/category/', { cancelToken: source.token })
+      .then(response => {
+        setFetchCategories(response.data);
+        console.log(response.data)
+      })
+      .catch(error => {
+        if (axios.isCancel(error)) {
+        } else {
+        }
+      });
+  
+    return () => {
+      source.cancel();
+    };
+  }, []);
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+  
+    axios.get('http://127.0.0.1:8000/dish/', { cancelToken: source.token })
+      .then(response => {
+        setFetchDishes(response.data.reverse());
+        console.log(response.data)
+      })
+      .catch(error => {
+        if (axios.isCancel(error)) {
+        } else {
+        }
+      });
+  
+    return () => {
+      source.cancel();
+    };
+  }, [refreshPage]);
+  
+  
   useEffect(() => {
     if (location.pathname === '/') {
       setShowLinks(true);
@@ -57,8 +102,22 @@ function App() {
             </Navbar>)
       }
       <Routes>
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/dishes" element={<Dishes />} />
+        <Route path="/home" element={
+        <HomePage 
+        fetchCategories={fetchCategories} 
+        fetchDishes={fetchDishes}
+        />
+        } 
+        />
+        <Route path="/dishes" element={
+        <Dishes 
+        fetchCategories={fetchCategories} 
+        fetchDishes={fetchDishes} 
+        refreshPage={refreshPage}
+        setRefreshPage={setRefreshPage}
+        />
+      } 
+        />
       </Routes>
 
       {showLinks && (

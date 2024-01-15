@@ -3,25 +3,23 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
-function AddDishForm(props) {
+function ConditionsForm(props) {
 
     const Categories = props.Categories
 
-    const [uploadFile, setUploadFile] = useState(null)
+    const [chooseTimeShow, setChooseTimeShow] = useState(true)
+
     const [formData, setFormData] = useState({
-      name: '',
-      description: '',
-      img: '',
       have_nuts: false,
       is_dairy: false,
       breakfast_dish: false,
       lunch_dish: false,
       dinner_dish: false,
-      category_id: 1,
+      category_id: 'All',
   });
 
   const handleInputChange = (event) => {
-    const {id, value, type, checked, files} = event.target;
+    const {id, value, type, checked} = event.target;
     
     if (type === 'select-one') {
       const selectedOption = value;
@@ -31,81 +29,49 @@ function AddDishForm(props) {
       }));
       return;
     }
-
-    else if (type === 'file') {
-      const file = files[0];
-      setUploadFile(file);
-      setFormData((prevData) => ({
-        ...prevData,
-        [id]:file.name
-      }))
+    
+    else if (id === 'turn_on_time'){
+      setChooseTimeShow(!chooseTimeShow)
+      setFormData({
+        have_nuts: formData.have_nuts,
+        is_dairy: formData.is_dairy,
+        breakfast_dish: false,
+        lunch_dish: false,
+        dinner_dish: false,
+        category_id: formData.category_id,
+    })
+      console.log(chooseTimeShow)
       return;
     }
-    
+
     else {
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: type === 'checkbox' ? checked : value,
-    }));
+      setFormData((prevData) => ({
+        ...prevData,
+        [id]: checked
+      }));
     }
   };
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
         event.preventDefault();
-        console.log(formData);
-        console.log(uploadFile)
-        const formDataObject = new FormData();
-        formDataObject.append('file', uploadFile)
-        axios.post(`http://127.0.0.1:8000/dish/upload`, formDataObject, {headers: { 'Content-Type': 'multipart/form-data' }}).then(respnonse => {
+        console.log(formData)
+        axios.post('http://127.0.0.1:8000/dish/choosefood', formData).then(respnonse => {
           console.log(respnonse.data)
         })
-        axios.post(`http://127.0.0.1:8000/dish/`, formData).then(respnonse => {
-          console.log(respnonse.data)
-        })
-        props.onClose();
-        await props.sleep(50)
-        props.refresh();
     }
   return (
-    <Form onSubmit={handleSubmit} className='Form' encType='multipart/form-data'>
-      <Form.Group className="mb-3" controlId="name">
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-        type ="text"
-        placeholder="Enter name"
-        value={formData.name}
-        onChange={handleInputChange}
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="description">
-        <Form.Label>Discription</Form.Label>
-        <Form.Control
-        type ="text"
-        placeholder="Enter Discription"
-        value={formData.description}
-        onChange={handleInputChange}
-        />
-      </Form.Group>
-
-      <Form.Group controlId="img" className="mb-3">
-        <Form.Label>Image</Form.Label>
-        <Form.Control 
-        type="file"
-        onChange={handleInputChange}
-        />
-      </Form.Group>
-
+    <Form onSubmit={handleSubmit} className='ChoosingForm' encType='multipart/form-data'>
       <Form.Group className="mb-3" controlId="category_id">
         <Form.Label>Categories</Form.Label>
         <Form.Select onChange={handleInputChange}>
+          <option value={'All'}>All</option>
           {Categories.map(category=>
           <option value={category.id}>{category.name}</option>
           )}
         </Form.Select>
       </Form.Group>
 
-      <div className='Alergies'>
+      <div className='ChoosingAlergies'>
         <Form.Group className="mb-3">
           <Form.Check 
           type="checkbox" 
@@ -127,13 +93,23 @@ function AddDishForm(props) {
 
           <hr/>
 
-        <div className='Time'>
+        <Form.Group className="mb-3" controlId="turn_on_time">
+          <Form.Check 
+            type="switch" 
+            label="Choose Time" 
+            onChange={handleInputChange}
+            />
+        </Form.Group>
+
+        <div className='ChoosingTime'>
         <Form.Group className="mb-3" controlId="breakfast_dish">
           <Form.Check 
             type="checkbox" 
             label="Breakfast" 
             id="breakfast_dish"
             onChange={handleInputChange}
+            disabled={chooseTimeShow}
+            checked={chooseTimeShow ? false : formData.breakfast_dish}
             />
         </Form.Group>
 
@@ -143,6 +119,8 @@ function AddDishForm(props) {
             label="Lunch" 
             id="lunch_dish"
             onChange={handleInputChange}
+            disabled={chooseTimeShow}
+            checked={chooseTimeShow ? false : formData.lunch_dish}
           />
         </Form.Group>
 
@@ -152,14 +130,16 @@ function AddDishForm(props) {
             label="Dinner" 
             id="dinner_dish"
             onChange={handleInputChange}
+            disabled={chooseTimeShow}
+            checked={chooseTimeShow ? false : formData.dinner_dish}
             />
         </Form.Group>
         </div>
       <Button variant="primary" type="submit">
-        Submit
+        Go
       </Button>
     </Form>
   );
 }
 
-export default AddDishForm;
+export default ConditionsForm;

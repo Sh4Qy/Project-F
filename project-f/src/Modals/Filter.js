@@ -6,17 +6,24 @@ function FilterModal(props) {
     <Modal
       show={props.show}
       onHide={props.onHide}
-      size="sm"
+      dialogClassName="modal-50w"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-            Filter
+          Filter
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <FilterForm onClose={props.onClose} Categories={props.Categories}/>
+        <FilterForm 
+        onClose={props.onClose}
+        Categories={props.Categories} 
+        witchCategoryFilter={props.witchCategoryFilter} 
+        setWitchCategoryFilter={props.setWitchCategoryFilter}
+        filterData={props.filterData}
+        setFilterData={props.setFilterData}
+        />
       </Modal.Body>
     </Modal>
   );

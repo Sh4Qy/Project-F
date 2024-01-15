@@ -1,45 +1,44 @@
-import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 function FilterForm(props) {
 
-    const Categories = props.Categories
-
-    const [formData, setFormData] = useState({
-        have_nuts: false,
-        is_dairy: false,
-        breakfast_dish: false,
-        lunch_dish: false,
-        dinner_dish: false,
-    });
-
-    const [witchCategory, setWitchCategory] = useState('')
+  const {Categories, setWitchCategoryFilter, witchCategoryFilter, filterData, setFilterData} = props;
 
   const handleInputChange = (event) => {
     const {id, value, type, checked} = event.target;
     
     if (type === 'select-one') {
-      setWitchCategory(value)
+      setWitchCategoryFilter(value)
       return;
     }
     
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: checked,
-    }));
+    setFilterData((prevData) => {
+      const updatedData = { ...prevData };
+    
+      updatedData[id] = checked;
+    
+      if (!checked && Object.keys(updatedData).length !== 0) {
+        delete updatedData[id];
+      }
+    
+      return updatedData;
+    });
   };
 
   return (
     <Form className='FilterForm'>
       <Form.Group className="mb-3" controlId="category_id">
-        <Form.Select onChange={handleInputChange} className='SelectCategories' value={witchCategory}>
-          <option value={''}>All</option>
+        <Form.Select onChange={handleInputChange} className='SelectCategories' value={witchCategoryFilter}>
+          <option value={'All'}>All</option>
           {Categories.map(category=>
           <option value={category.id}>{category.name}</option>
           )}
         </Form.Select>
       </Form.Group>
+
+      <hr/>
+
 
       <div className='Alergies'>
         <Form.Group className="mb-3">
@@ -47,7 +46,7 @@ function FilterForm(props) {
           type="checkbox" 
           label="Have Nuts" 
           id="have_nuts"
-          checked={formData.have_nuts}
+          checked={filterData.have_nuts}
           onChange={handleInputChange}
           />
         </Form.Group>
@@ -57,7 +56,7 @@ function FilterForm(props) {
             type="checkbox" 
             label="Dairy" 
             id="is_dairy"
-            checked={formData.is_dairy}
+            checked={filterData.is_dairy}
             onChange={handleInputChange}
             />
         </Form.Group>
@@ -71,7 +70,7 @@ function FilterForm(props) {
             type="checkbox" 
             label="Breakfast" 
             id="breakfast_dish"
-            checked={formData.breakfast_dish}
+            checked={filterData.breakfast_dish}
             onChange={handleInputChange}
             />
         </Form.Group>
@@ -81,7 +80,7 @@ function FilterForm(props) {
             type="checkbox" 
             label="Lunch" 
             id="lunch_dish"
-            checked={formData.lunch_dish}
+            checked={filterData.lunch_dish}
             onChange={handleInputChange}
           />
         </Form.Group>
@@ -91,24 +90,16 @@ function FilterForm(props) {
             type="checkbox" 
             label="Dinner" 
             id="dinner_dish"
-            checked={formData.dinner_dish}
+            checked={filterData.dinner_dish}
             onChange={handleInputChange}
             />
         </Form.Group>
         </div>
+        
       <div className='FilterFormButtons'>
-      <Button variant="primary" onClick={console.log(formData)}>
-        Search
-      </Button>
       <Button variant="primary" onClick={()=>
-      {setFormData({
-        have_nuts: false,
-        is_dairy: false,
-        breakfast_dish: false,
-        lunch_dish: false,
-        dinner_dish: false,
-        });
-       setWitchCategory('')}}>
+      {setFilterData({});
+       setWitchCategoryFilter('All')}}>
         Reset
       </Button>
       </div>
